@@ -1,1 +1,12 @@
-.vscode/
+# Ignore the entire folder structure
+.vscode/*
+
+# Keep shared config files explicitly
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Ignore personal workspace states
+*.code-workspace

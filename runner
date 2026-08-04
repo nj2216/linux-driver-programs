@@ -6,7 +6,7 @@ $DTC -@ -I dts -O dtb hello-overlay.dts -o hello-overlay.dtbo
 $FDTOVERLAY -i virt_base.dtb -o virt_merged_nogc.dtb hello-overlay.dtbo
 
 // for loading module into the root of busybox
-cp hello.ko ~/riscv-workspace/busybox/initramfs/root/
+cp mynull.ko ~/riscv-workspace/busybox/initramfs/root/
 cd ~/riscv-workspace/busybox/initramfs
 find . | cpio -H newc -o | gzip > ../initramfs.cpio.gz
 cd ..

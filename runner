@@ -1,0 +1,20 @@
+// for device tree compiling
+export DTC=~/riscv-workspace/linux/scripts/dtc/dtc
+export FDTOVERLAY=~/riscv-workspace/linux/scripts/dtc/fdtoverlay
+cd ~/riscv-workspace/busybox
+$DTC -@ -I dts -O dtb hello-overlay.dts -o hello-overlay.dtbo
+$FDTOVERLAY -i virt_base.dtb -o virt_merged_nogc.dtb hello-overlay.dtbo
+
+// for loading module into the root of busybox
+cp hello.ko ~/riscv-workspace/busybox/initramfs/root/
+cd ~/riscv-workspace/busybox/initramfs
+find . | cpio -H newc -o | gzip > ../initramfs.cpio.gz
+cd ..
+
+
+// run qemu
+qemu-system-riscv64 -M virt -nographic -cpu max \
+  -kernel /home/student/riscv-workspace/linux/arch/riscv/boot/Image \
+  -initrd initramfs.cpio.gz \
+  -dtb virt_merged.dtb \
+  -append "console=ttyS0"

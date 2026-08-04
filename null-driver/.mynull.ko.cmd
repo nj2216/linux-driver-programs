@@ -1,0 +1,1 @@
+savedcmd_mynull.ko := riscv64-linux-gnu-ld -r -melf64lriscv -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T /home/student/riscv-workspace/linux/scripts/module.lds -o mynull.ko mynull.o mynull.mod.o .module-common.o

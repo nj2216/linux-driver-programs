@@ -1,0 +1,17 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "qemu,virt";
+
+    fragment@0 {
+        target-path = "/";
+        __overlay__ {
+            my_ramdisk: myramdisk {
+                compatible = "jeevan,myramdisk";
+                ram-size = <16384>; /* 16 KB allocated via DT! */
+                status = "okay";
+            };
+        };
+    };
+};

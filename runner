@@ -1,12 +1,17 @@
 // for device tree compiling
 export DTC=~/riscv-workspace/linux/scripts/dtc/dtc
 export FDTOVERLAY=~/riscv-workspace/linux/scripts/dtc/fdtoverlay
-cd ~/riscv-workspace/busybox
-$DTC -@ -I dts -O dtb hello-overlay.dts -o hello-overlay.dtbo
-$FDTOVERLAY -i virt_base.dtb -o virt_merged_nogc.dtb hello-overlay.dtbo
+
+cd ~/personal-projects/linux-driver-programs/ramdisk-driver-dt
+
+# 1. Compile DTS to DTBO
+$DTC -@ -I dts -O dtb myramdisk-overlay.dts -o myramdisk-overlay.dtbo
+
+# 2. Merge into base DTB (adjust path to your virt_base.dtb if needed)
+$FDTOVERLAY -i ~/riscv-workspace/busybox/virt_base.dtb -o ~/riscv-workspace/busybox/virt_merged.dtb myramdisk-overlay.dtbo
 
 // for loading module into the root of busybox
-cp mynull.ko ~/riscv-workspace/busybox/initramfs/root/
+cp myramdisk_dt.ko ~/riscv-workspace/busybox/initramfs/root/
 cd ~/riscv-workspace/busybox/initramfs
 find . | cpio -H newc -o | gzip > ../initramfs.cpio.gz
 cd ..
